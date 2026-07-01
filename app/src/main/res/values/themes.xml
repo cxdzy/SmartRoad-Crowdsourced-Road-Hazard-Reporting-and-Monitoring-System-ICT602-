@@ -1,0 +1,14 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.SmartRoad" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:statusBarColor">@color/primary_dark</item>
+    </style>
+
+    <style name="Theme.SmartRoad" parent="Base.Theme.SmartRoad" />
+
+    <style name="Theme.SmartRoad.Login" parent="Base.Theme.SmartRoad">
+        <item name="android:windowBackground">@color/primary</item>
+    </style>
+</resources>

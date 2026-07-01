@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- SmartRoad brand colors -->
+    <color name="primary">#1A237E</color>       <!-- deep navy -->
+    <color name="primary_dark">#000051</color>
+    <color name="accent">#FF6F00</color>         <!-- amber/hazard orange -->
+    <color name="accent_light">#FFA000</color>
+    <color name="surface">#F5F5F5</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+
+    <!-- Hazard marker colors -->
+    <color name="hazard_pothole">#F44336</color>
+    <color name="hazard_flood">#2196F3</color>
+    <color name="hazard_accident">#FF5722</color>
+    <color name="hazard_fallen_tree">#4CAF50</color>
+    <color name="hazard_traffic_light">#FF9800</color>
+
+    <!-- Status colors -->
+    <color name="status_new">#F44336</color>
+    <color name="status_investigating">#FF9800</color>
+    <color name="status_resolved">#4CAF50</color>
+</resources>

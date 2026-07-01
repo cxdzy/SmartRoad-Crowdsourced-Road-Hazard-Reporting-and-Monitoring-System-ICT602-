@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "428556923249",
+    "firebase_url": "https://smartroad-1bf13-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "smartroad-1bf13",
+    "storage_bucket": "smartroad-1bf13.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:428556923249:android:a3dc546ed4cbc1570bc6d0",
+        "android_client_info": {
+          "package_name": "com.example.smartroad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "428556923249-jg14si302o4fk122nsla7u8uhrl027ns.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smartroad",
+            "certificate_hash": "d6c44241d2a58c89dc2e00a1085c0002d7955277"
+          }
+        },
+        {
+          "client_id": "428556923249-dqnfcrjiumcu3cr4jfreo1gbpjlnrsu3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhQn8_XAqc-eAVLqwHv7aiy3pWpkLHBxE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "428556923249-dqnfcrjiumcu3cr4jfreo1gbpjlnrsu3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
