@@ -5,11 +5,13 @@ import { ref as storageRef, deleteObject } from 'firebase/storage'
 import { db, storage } from '../firebase'
 import { RouterLink } from 'vue-router'
 import PhotoModal from '../components/PhotoModal.vue'
+import HazardMap from '../components/HazardMap.vue'
 
 const HAZARD_TYPES = ['Pothole', 'Flood', 'Accident', 'Fallen Tree', 'Traffic Light']
 const STATUS_OPTIONS = ['New', 'Under Investigation', 'Resolved']
 
 const lightboxUrl = ref(null)
+const viewMode = ref('table')
 
 const users = ref({})
 const reports = ref({})
@@ -121,9 +123,29 @@ async function deleteReport(report) {
         <option v-for="s in STATUS_OPTIONS" :key="s" :value="s">{{ s }}</option>
       </select>
       <input v-model="filterDate" type="date" />
+      <div class="view-toggle">
+        <button
+          type="button"
+          :class="['toggle-btn', { active: viewMode === 'table' }]"
+          @click="viewMode = 'table'"
+        >
+          Table
+        </button>
+        <button
+          type="button"
+          :class="['toggle-btn', { active: viewMode === 'map' }]"
+          @click="viewMode = 'map'"
+        >
+          Map
+        </button>
+      </div>
     </div>
 
-    <div class="table-wrap">
+    <div v-if="viewMode === 'map'" class="card map-card">
+      <HazardMap :reports="filteredReports" height="520px" />
+    </div>
+
+    <div v-else class="table-wrap">
       <table class="reports-table">
         <thead>
           <tr>
@@ -167,7 +189,7 @@ async function deleteReport(report) {
             </td>
             <td class="actions">
               <RouterLink :to="`/reports/${r.id}`">View</RouterLink>
-              <button class="link-btn danger" @click="deleteReport(r)">Delete</button>
+              <button class="btn-link-danger" @click="deleteReport(r)">Delete</button>
             </td>
           </tr>
         </tbody>
@@ -190,15 +212,23 @@ async function deleteReport(report) {
 .filters {
   display: flex;
   gap: 0.75rem;
-  margin: 1rem 0 1.5rem;
+  margin: 1.25rem 0 1.5rem;
   flex-wrap: wrap;
 }
 
 .filters input,
 .filters select {
-  padding: 0.4rem 0.6rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius);
+  background: var(--color-on-primary);
+  color: var(--color-text-primary);
+}
+
+.filters input:focus,
+.filters select:focus {
+  outline: none;
+  border-color: var(--color-primary);
 }
 
 .filters input[type='text'] {
@@ -206,21 +236,67 @@ async function deleteReport(report) {
   min-width: 220px;
 }
 
+.view-toggle {
+  display: flex;
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.toggle-btn {
+  padding: 0.45rem 0.9rem;
+  border: none;
+  background: var(--color-on-primary);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  font: inherit;
+}
+
+.toggle-btn + .toggle-btn {
+  border-left: 1px solid var(--color-divider);
+}
+
+.toggle-btn.active {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.map-card {
+  margin-bottom: 1.5rem;
+}
+
 .table-wrap {
   overflow-x: auto;
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius);
 }
 
 .reports-table {
   width: 100%;
   border-collapse: collapse;
   white-space: nowrap;
+  background: var(--color-on-primary);
 }
 
 .reports-table th,
 .reports-table td {
   text-align: left;
-  padding: 0.6rem 0.75rem;
-  border-bottom: 1px solid #e2e8f0;
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.reports-table th {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.reports-table tbody tr:hover {
+  background: var(--color-surface);
+}
+
+.reports-table tbody tr:last-child td {
+  border-bottom: none;
 }
 
 .description {
@@ -233,53 +309,26 @@ async function deleteReport(report) {
   height: 48px;
   object-fit: cover;
   border-radius: 4px;
+  border: 1px solid var(--color-divider);
 }
 
 .empty {
-  color: #64748b;
+  color: var(--color-text-secondary);
   text-align: center;
 }
 
 .status-select {
-  padding: 0.25rem 0.4rem;
-  border-radius: 6px;
-  border: none;
-  color: white;
-  font-weight: 600;
-}
-
-.status-new {
-  background: #f44336;
-}
-
-.status-investigating {
-  background: #ff9800;
-}
-
-.status-resolved {
-  background: #4caf50;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+  font-size: 0.85rem;
+  border: 1px solid currentColor;
+  background: var(--color-on-primary);
 }
 
 .actions {
   display: flex;
-  gap: 0.75rem;
+  gap: 1rem;
   align-items: center;
-}
-
-.actions a {
-  color: #2563eb;
-  text-decoration: none;
-}
-
-.link-btn {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  font: inherit;
-}
-
-.link-btn.danger {
-  color: #dc2626;
 }
 </style>

@@ -22,7 +22,7 @@ async function handleLogout() {
     </nav>
     <div class="user-info">
       <span v-if="currentUser">{{ currentUser.email }}</span>
-      <button class="logout-btn" @click="handleLogout">Logout</button>
+      <button class="btn btn-outline-light" @click="handleLogout">Logout</button>
     </div>
   </header>
 
@@ -37,30 +37,42 @@ async function handleLogout() {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 2rem;
-  background: #1e293b;
-  color: white;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
   gap: 1.5rem;
+  border-bottom: 1px solid var(--color-primary-dark);
 }
 
 .brand {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
+  font-weight: 600;
   margin: 0;
+  color: var(--color-on-primary);
+  white-space: nowrap;
 }
 
 nav {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
   flex: 1;
 }
 
 nav a {
-  color: #cbd5e1;
+  color: rgba(255, 255, 255, 0.75);
   text-decoration: none;
   font-weight: 500;
+  padding: 0.25rem 0;
+  border-bottom: 2px solid transparent;
+}
+
+nav a:hover {
+  color: var(--color-on-primary);
+  text-decoration: none;
 }
 
 nav a.router-link-active {
-  color: white;
+  color: var(--color-on-primary);
+  border-bottom-color: var(--color-accent);
 }
 
 .user-info {
@@ -68,19 +80,12 @@ nav a.router-link-active {
   align-items: center;
   gap: 1rem;
   font-size: 0.9rem;
-  color: #cbd5e1;
-}
-
-.logout-btn {
-  background: none;
-  border: 1px solid #475569;
-  color: white;
-  padding: 0.35rem 0.75rem;
-  border-radius: 6px;
-  cursor: pointer;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .content {
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 2rem;
 }
 </style>

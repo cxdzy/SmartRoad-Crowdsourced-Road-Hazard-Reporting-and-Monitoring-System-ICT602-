@@ -38,5 +38,10 @@ defineEmits(['close'])
   font-size: 2rem;
   line-height: 1;
   cursor: pointer;
+  transition: color 0.15s;
+}
+
+.close-btn:hover {
+  color: var(--color-accent);
 }
 </style>

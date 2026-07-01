@@ -3,6 +3,7 @@ import { onMounted, onUnmounted, ref, computed } from 'vue'
 import { onValue, ref as dbRef } from 'firebase/database'
 import { db } from '../firebase'
 import { RouterLink } from 'vue-router'
+import HazardMap from '../components/HazardMap.vue'
 
 const users = ref({})
 const reports = ref({})
@@ -52,22 +53,27 @@ function statusClass(status) {
     <h1>Dashboard</h1>
 
     <div class="cards">
-      <div class="card">
+      <div class="card stat-card">
         <div class="card-value">{{ totalUsers }}</div>
         <div class="card-label">Total Users</div>
       </div>
-      <div class="card">
+      <div class="card stat-card">
         <div class="card-value">{{ totalReports }}</div>
         <div class="card-label">Total Reports</div>
       </div>
-      <div class="card">
+      <div class="card stat-card">
         <div class="card-value">{{ openReports }}</div>
         <div class="card-label">Open</div>
       </div>
-      <div class="card">
+      <div class="card stat-card">
         <div class="card-value">{{ resolvedReports }}</div>
         <div class="card-label">Resolved</div>
       </div>
+    </div>
+
+    <h2>Hazard Map</h2>
+    <div class="card map-card">
+      <HazardMap :reports="reportList" height="320px" />
     </div>
 
     <h2>Recent Reports</h2>
@@ -107,22 +113,24 @@ function statusClass(status) {
   margin: 1.5rem 0;
 }
 
-.card {
-  background: #f1f5f9;
-  border-radius: 8px;
-  padding: 1.25rem;
+.stat-card {
   text-align: center;
+}
+
+.map-card {
+  margin-bottom: 1.5rem;
 }
 
 .card-value {
   font-size: 2rem;
-  font-weight: 700;
-  color: #1e293b;
+  font-weight: 600;
+  color: var(--color-primary-dark);
 }
 
 .card-label {
-  color: #64748b;
+  color: var(--color-text-secondary);
   margin-top: 0.25rem;
+  font-size: 0.9rem;
 }
 
 .reports-table {
@@ -133,37 +141,22 @@ function statusClass(status) {
 .reports-table th,
 .reports-table td {
   text-align: left;
-  padding: 0.6rem 0.75rem;
-  border-bottom: 1px solid #e2e8f0;
+  padding: 0.65rem 0.75rem;
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.reports-table th {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  font-size: 0.85rem;
 }
 
 .reports-table a {
-  color: #2563eb;
-  text-decoration: none;
+  color: var(--color-primary);
 }
 
 .empty {
-  color: #64748b;
+  color: var(--color-text-secondary);
   text-align: center;
-}
-
-.status-badge {
-  padding: 0.2rem 0.6rem;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: white;
-}
-
-.status-new {
-  background: #f44336;
-}
-
-.status-investigating {
-  background: #ff9800;
-}
-
-.status-resolved {
-  background: #4caf50;
 }
 </style>

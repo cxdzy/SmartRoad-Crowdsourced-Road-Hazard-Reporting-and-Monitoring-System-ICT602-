@@ -1,35 +1,113 @@
 @import './base.css';
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+  min-height: 100vh;
 }
 
-a,
-.green {
+a {
+  color: var(--color-primary);
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+a:hover {
+  color: var(--color-primary-dark);
+  text-decoration: underline;
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
+/* Shared button styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.1rem;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s;
+}
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+.btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: var(--color-on-primary);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-accent-dark);
+}
+
+.btn-danger {
+  background: var(--color-danger);
+  color: var(--color-on-primary);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: #a11f1f;
+}
+
+.btn-outline-light {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.4);
+  color: var(--color-on-primary);
+}
+
+.btn-outline-light:hover:not(:disabled) {
+  background: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+.btn-link-danger {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--color-danger);
+  font: inherit;
+  cursor: pointer;
+}
+
+.btn-link-danger:hover {
+  color: #8f1f1f;
+  text-decoration: underline;
+}
+
+/* Flat card */
+.card {
+  background: var(--color-on-primary);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+/* Status badges — shared across Dashboard, Manage Reports, Report Details */
+.status-badge {
+  display: inline-block;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+}
+
+.status-new {
+  color: var(--color-status-new);
+  background: rgba(244, 67, 54, 0.08);
+}
+
+.status-investigating {
+  color: #a66000;
+  background: rgba(255, 152, 0, 0.12);
+}
+
+.status-resolved {
+  color: #2e7d32;
+  background: rgba(76, 175, 80, 0.1);
 }

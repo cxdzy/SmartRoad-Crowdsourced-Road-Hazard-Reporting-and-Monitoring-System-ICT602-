@@ -44,7 +44,9 @@ async function handleLogin() {
         <input v-model="password" type="password" required autocomplete="current-password" />
       </label>
       <p v-if="error" class="error">{{ error }}</p>
-      <button type="submit" :disabled="loading">{{ loading ? 'Signing in…' : 'Sign in' }}</button>
+      <button type="submit" class="btn btn-primary" :disabled="loading">
+        {{ loading ? 'Signing in…' : 'Sign in' }}
+      </button>
     </form>
   </div>
 </template>
@@ -55,57 +57,55 @@ async function handleLogin() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f1f5f9;
+  background: var(--color-primary);
 }
 
 .login-card {
-  background: white;
-  border-radius: 8px;
-  padding: 2rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-primary-dark);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem;
   width: 320px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.1rem;
 }
 
 .login-card h1 {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   margin: 0 0 0.5rem;
   text-align: center;
+  color: var(--color-primary-dark);
 }
 
 .login-card label {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0.35rem;
   font-size: 0.9rem;
-  color: #334155;
+  color: var(--color-text-secondary);
 }
 
 .login-card input {
-  padding: 0.5rem 0.6rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius);
+  background: var(--color-on-primary);
+  color: var(--color-text-primary);
 }
 
-.login-card button {
-  padding: 0.6rem;
-  background: #1e293b;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
+.login-card input:focus {
+  outline: none;
+  border-color: var(--color-primary);
 }
 
-.login-card button:disabled {
-  opacity: 0.6;
-  cursor: default;
+.login-card .btn {
+  width: 100%;
+  padding: 0.65rem;
 }
 
 .error {
-  color: #dc2626;
+  color: var(--color-danger);
   font-size: 0.85rem;
   margin: 0;
 }

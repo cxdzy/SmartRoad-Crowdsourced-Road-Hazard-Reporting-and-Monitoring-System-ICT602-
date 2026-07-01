@@ -84,7 +84,7 @@ async function saveStatus() {
 
     <div v-if="notFound" class="empty">Report not found.</div>
 
-    <div v-else-if="report" class="report-card">
+    <div v-else-if="report" class="card report-card">
       <h1>{{ report.type || '—' }}</h1>
 
       <button v-if="report.photoUrl" class="photo-btn" @click="lightboxOpen = true">
@@ -121,7 +121,7 @@ async function saveStatus() {
         <select id="status-select" v-model="selectedStatus">
           <option v-for="s in STATUS_OPTIONS" :key="s" :value="s">{{ s }}</option>
         </select>
-        <button :disabled="!statusChanged || saving" @click="saveStatus">
+        <button class="btn btn-primary" :disabled="!statusChanged || saving" @click="saveStatus">
           {{ saving ? 'Saving…' : 'Save' }}
         </button>
       </div>
@@ -142,8 +142,7 @@ async function saveStatus() {
 .back-link {
   display: inline-block;
   margin-bottom: 1rem;
-  color: #2563eb;
-  text-decoration: none;
+  color: var(--color-primary);
 }
 
 .report-card {
@@ -163,7 +162,8 @@ async function saveStatus() {
   width: 100%;
   max-height: 360px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-divider);
   margin: 1rem 0;
 }
 
@@ -172,8 +172,9 @@ async function saveStatus() {
   align-items: center;
   justify-content: center;
   height: 200px;
-  background: #f1f5f9;
-  color: #64748b;
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-divider);
 }
 
 .fields {
@@ -184,69 +185,36 @@ async function saveStatus() {
 }
 
 .fields dt {
-  font-weight: 600;
-  color: #64748b;
+  font-weight: 500;
+  color: var(--color-text-secondary);
 }
 
 .fields dd {
   margin: 0;
 }
 
-.status-badge {
-  padding: 0.2rem 0.6rem;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: white;
-}
-
-.status-new {
-  background: #f44336;
-}
-
-.status-investigating {
-  background: #ff9800;
-}
-
-.status-resolved {
-  background: #4caf50;
-}
-
 .status-form {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding-top: 1rem;
-  border-top: 1px solid #e2e8f0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-divider);
 }
 
 .status-form select {
-  padding: 0.4rem 0.6rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-}
-
-.status-form button {
-  padding: 0.5rem 1rem;
-  background: #1e293b;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.status-form button:disabled {
-  opacity: 0.5;
-  cursor: default;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius);
+  background: var(--color-on-primary);
+  color: var(--color-text-primary);
 }
 
 .error {
-  color: #dc2626;
+  color: var(--color-danger);
   margin-top: 0.75rem;
 }
 
 .empty {
-  color: #64748b;
+  color: var(--color-text-secondary);
 }
 </style>
