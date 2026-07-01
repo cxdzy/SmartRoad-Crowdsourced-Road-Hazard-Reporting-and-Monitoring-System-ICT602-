@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/surface"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -10,9 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/primary"
-        app:navigationIcon="@drawable/ic_nav_map"
         app:title="Report Hazard"
-        app:titleTextColor="@color/white" />
+        app:titleTextColor="@color/white"
+        app:titleTextAppearance="@style/TextAppearance.SmartRoad.ToolbarTitle" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -24,70 +25,81 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="20dp">
 
-            <!-- Hazard Type -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
                 android:text="Hazard Type *"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textColor="@color/text_secondary"
+                android:textSize="24sp" />
 
             <RadioGroup
                 android:id="@+id/rgHazardType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="20dp">
 
                 <RadioButton
                     android:id="@+id/rbPothole"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pothole" />
+                    android:paddingVertical="6dp"
+                    android:text="Pothole"
+                    android:textColor="@color/text_primary"
+                    android:textSize="30sp" />
 
                 <RadioButton
                     android:id="@+id/rbFlood"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Flood" />
+                    android:paddingVertical="6dp"
+                    android:text="Flood"
+                    android:textColor="@color/text_primary"
+                    android:textSize="30sp" />
 
                 <RadioButton
                     android:id="@+id/rbAccident"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Accident" />
+                    android:paddingVertical="6dp"
+                    android:text="Accident"
+                    android:textColor="@color/text_primary"
+                    android:textSize="30sp" />
 
                 <RadioButton
                     android:id="@+id/rbFallenTree"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Fallen Tree" />
+                    android:paddingVertical="6dp"
+                    android:text="Fallen Tree"
+                    android:textColor="@color/text_primary"
+                    android:textSize="30sp" />
 
                 <RadioButton
                     android:id="@+id/rbTrafficLight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Traffic Light" />
+                    android:paddingVertical="6dp"
+                    android:text="Traffic Light"
+                    android:textColor="@color/text_primary"
+                    android:textSize="30sp" />
 
             </RadioGroup>
 
-            <!-- Description -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
                 android:text="Description *"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textColor="@color/text_secondary"
+                android:textSize="24sp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="20dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -97,99 +109,107 @@
                     android:gravity="top"
                     android:hint="Describe the hazard..."
                     android:inputType="textMultiLine"
-                    android:minLines="3" />
+                    android:minLines="3"
+                    android:textSize="30sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Photo -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
                 android:text="Photo"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textColor="@color/text_secondary"
+                android:textSize="24sp" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSelectPhoto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:backgroundTint="@color/accent"
-                android:text="Select Photo" />
+                android:text="Select Photo"
+                android:textColor="@color/white"
+                android:textSize="28sp" />
 
             <ImageView
                 android:id="@+id/ivPhotoPreview"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="#E0E0E0"
+                android:layout_height="180dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/divider"
                 android:contentDescription="Photo preview"
                 android:scaleType="centerCrop"
                 android:visibility="gone" />
 
-            <!-- Auto-filled GPS -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
                 android:text="Location (auto)"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textColor="@color/text_secondary"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/tvLatLng"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/surface"
                 android:padding="12dp"
-                android:background="#F5F5F5"
                 android:text="Acquiring location..."
                 android:textColor="@color/text_secondary"
-                android:textSize="13sp" />
+                android:textSize="28sp" />
 
-            <!-- Auto-filled Date/Time -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
                 android:text="Date &amp; Time (auto)"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textColor="@color/text_secondary"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/tvDateTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="28dp"
+                android:background="@color/surface"
                 android:padding="12dp"
-                android:background="#F5F5F5"
                 android:textColor="@color/text_secondary"
-                android:textSize="13sp" />
+                android:textSize="28sp" />
 
-            <!-- Submit -->
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/primary"
+                android:padding="14dp"
                 android:text="Submit Report"
                 android:textColor="@color/white"
-                android:padding="14dp" />
+                android:textSize="28sp" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="16dp"
+                android:indeterminateTint="@color/primary"
                 android:visibility="gone" />
 
         </LinearLayout>
 
     </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:itemIconTint="@color/primary"
+        app:itemTextColor="@color/primary"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_nav_menu" />
 
 </LinearLayout>

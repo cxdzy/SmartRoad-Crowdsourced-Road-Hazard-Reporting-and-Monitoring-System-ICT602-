@@ -4,9 +4,17 @@
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
         <item name="android:statusBarColor">@color/primary_dark</item>
+        <item name="android:windowBackground">@color/surface</item>
+        <item name="android:fontFamily">@font/dongle</item>
+        <item name="fontFamily">@font/dongle</item>
     </style>
 
     <style name="Theme.SmartRoad" parent="Base.Theme.SmartRoad" />
+
+    <style name="TextAppearance.SmartRoad.ToolbarTitle" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textSize">40sp</item>
+        <item name="android:fontFamily">@font/dongle</item>
+    </style>
 
     <style name="Theme.SmartRoad.Login" parent="Base.Theme.SmartRoad">
         <item name="android:windowBackground">@color/primary</item>

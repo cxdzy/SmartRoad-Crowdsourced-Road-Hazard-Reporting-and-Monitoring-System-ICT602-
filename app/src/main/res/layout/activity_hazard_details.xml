@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/surface"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -10,9 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/primary"
-        app:navigationIcon="@drawable/ic_nav_map"
+        app:navigationIcon="@drawable/ic_arrow_back"
         app:title="Hazard Details"
-        app:titleTextColor="@color/white" />
+        app:titleTextColor="@color/white"
+        app:titleTextAppearance="@style/TextAppearance.SmartRoad.ToolbarTitle" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -24,36 +26,36 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Photo (hidden when no URL) -->
             <ImageView
                 android:id="@+id/ivPhoto"
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
-                android:background="#BDBDBD"
+                android:background="@color/divider"
                 android:contentDescription="Hazard photo"
                 android:scaleType="centerCrop"
                 android:visibility="gone" />
 
-            <!-- Details card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="12dp"
+                android:layout_margin="16dp"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="4dp">
+                app:cardElevation="0dp"
+                app:strokeColor="@color/divider"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="20dp">
 
-                    <!-- Type + Status row -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginBottom="16dp">
+                        android:layout_marginBottom="20dp"
+                        android:gravity="center_vertical">
 
                         <TextView
                             android:id="@+id/tvType"
@@ -61,7 +63,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textColor="@color/text_primary"
-                            android:textSize="22sp"
+                            android:textSize="42sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -71,101 +73,90 @@
                             android:paddingHorizontal="12dp"
                             android:paddingVertical="4dp"
                             android:textColor="@color/white"
-                            android:textSize="12sp"
+                            android:textSize="24sp"
                             android:textStyle="bold" />
 
                     </LinearLayout>
 
-                    <!-- Description -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Description"
                         android:textColor="@color/text_secondary"
-                        android:textSize="12sp" />
+                        android:textSize="24sp" />
 
                     <TextView
                         android:id="@+id/tvDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="20dp"
                         android:textColor="@color/text_primary"
-                        android:textSize="15sp" />
+                        android:textSize="30sp" />
 
-                    <!-- Reporter -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Reported by"
                         android:textColor="@color/text_secondary"
-                        android:textSize="12sp" />
+                        android:textSize="24sp" />
 
                     <TextView
                         android:id="@+id/tvReporter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="20dp"
                         android:textColor="@color/text_primary"
-                        android:textSize="15sp" />
+                        android:textSize="30sp" />
 
-                    <!-- Location -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Location"
                         android:textColor="@color/text_secondary"
-                        android:textSize="12sp" />
+                        android:textSize="24sp" />
 
                     <TextView
                         android:id="@+id/tvLocation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="20dp"
                         android:textColor="@color/text_primary"
-                        android:textSize="15sp" />
+                        android:textSize="30sp" />
 
-                    <!-- Timestamp -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Reported at"
                         android:textColor="@color/text_secondary"
-                        android:textSize="12sp" />
+                        android:textSize="24sp" />
 
                     <TextView
                         android:id="@+id/tvTimestamp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="20dp"
                         android:textColor="@color/text_primary"
-                        android:textSize="15sp" />
+                        android:textSize="30sp" />
 
-                    <!-- Device -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Device"
                         android:textColor="@color/text_secondary"
-                        android:textSize="12sp" />
+                        android:textSize="24sp" />
 
                     <TextView
                         android:id="@+id/tvUserAgent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="24dp"
                         android:textColor="@color/text_primary"
-                        android:textSize="15sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="16dp"
-                        android:background="#E0E0E0" />
+                        android:textSize="30sp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnChangeStatus"
@@ -174,6 +165,7 @@
                         android:backgroundTint="@color/primary"
                         android:text="Change Status"
                         android:textColor="@color/white"
+                        android:textSize="28sp"
                         android:visibility="gone" />
 
                 </LinearLayout>
@@ -186,6 +178,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="32dp"
+                android:indeterminateTint="@color/primary"
                 android:visibility="visible" />
 
         </LinearLayout>

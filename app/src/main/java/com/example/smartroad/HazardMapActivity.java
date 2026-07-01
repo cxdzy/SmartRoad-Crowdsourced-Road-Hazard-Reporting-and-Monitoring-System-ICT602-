@@ -4,12 +4,13 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -21,6 +22,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -44,21 +46,32 @@ public class HazardMapActivity extends AppCompatActivity implements OnMapReadyCa
     private final Map<String, Marker> markersCache = new HashMap<>();
 
     private int currentFilterIndex = 0; // 0 = All Types
+    private TextView tvEmptyState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hazard_map);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(v -> finish());
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
+        bottomNav.setSelectedItemId(R.id.nav_map);
+        bottomNav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_report) {
+                startActivity(new Intent(this, ReportHazardActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+            } else if (id == R.id.nav_profile) {
+                startActivity(new Intent(this, ProfileActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+            }
+            return true;
+        });
 
         SupportMapFragment mapFragment = (SupportMapFragment)
                 getSupportFragmentManager().findFragmentById(R.id.mapFull);
         if (mapFragment != null) mapFragment.getMapAsync(this);
 
+        tvEmptyState = findViewById(R.id.tvEmptyState);
         findViewById(R.id.btnFilter).setOnClickListener(v -> showFilterDialog());
         findViewById(R.id.btnRefresh).setOnClickListener(v -> {
             clearMap();
@@ -131,6 +144,7 @@ public class HazardMapActivity extends AppCompatActivity implements OnMapReadyCa
                 }
 
                 applyFilter();
+                tvEmptyState.setVisibility(hasMarkers ? View.GONE : View.VISIBLE);
 
                 // Zoom to fit all markers on first load
                 if (hasMarkers) {

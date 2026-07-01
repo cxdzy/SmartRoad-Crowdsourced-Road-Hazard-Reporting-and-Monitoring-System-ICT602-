@@ -11,9 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/primary"
-        app:navigationIcon="@drawable/ic_nav_map"
+        app:navigationIcon="@drawable/ic_arrow_back"
         app:title="About"
-        app:titleTextColor="@color/white" />
+        app:titleTextColor="@color/white"
+        app:titleTextAppearance="@style/TextAppearance.SmartRoad.ToolbarTitle" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,7 +27,6 @@
             android:orientation="vertical"
             android:padding="24dp">
 
-            <!-- App identity -->
             <ImageView
                 android:layout_width="96dp"
                 android:layout_height="96dp"
@@ -40,7 +40,7 @@
                 android:layout_marginTop="12dp"
                 android:text="@string/app_name"
                 android:textColor="@color/primary"
-                android:textSize="28sp"
+                android:textSize="54sp"
                 android:textStyle="bold"
                 android:letterSpacing="0.1" />
 
@@ -50,7 +50,7 @@
                 android:layout_marginTop="4dp"
                 android:text="Version 1.0"
                 android:textColor="@color/text_secondary"
-                android:textSize="13sp" />
+                android:textSize="28sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -59,16 +59,17 @@
                 android:layout_marginBottom="24dp"
                 android:text="@string/app_tagline"
                 android:textColor="@color/accent"
-                android:textSize="13sp"
+                android:textSize="28sp"
                 android:textStyle="italic" />
 
-            <!-- Developer card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="4dp">
+                app:cardElevation="0dp"
+                app:strokeColor="@color/divider"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -82,7 +83,7 @@
                         android:layout_marginBottom="12dp"
                         android:text="Developer"
                         android:textColor="@color/text_secondary"
-                        android:textSize="12sp"
+                        android:textSize="24sp"
                         android:textAllCaps="true"
                         android:letterSpacing="0.1" />
 
@@ -91,7 +92,7 @@
                         android:layout_height="wrap_content"
                         android:text="Haziq Naqib"
                         android:textColor="@color/text_primary"
-                        android:textSize="16sp"
+                        android:textSize="34sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -100,7 +101,7 @@
                         android:layout_marginTop="2dp"
                         android:text="ICT602 Mobile Technology"
                         android:textColor="@color/text_secondary"
-                        android:textSize="13sp" />
+                        android:textSize="28sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -108,19 +109,20 @@
                         android:layout_marginTop="2dp"
                         android:text="haziqnaqib11@gmail.com"
                         android:textColor="@color/text_secondary"
-                        android:textSize="13sp" />
+                        android:textSize="28sp" />
 
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- GitHub link card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="4dp">
+                app:cardElevation="0dp"
+                app:strokeColor="@color/divider"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -134,18 +136,19 @@
                         android:layout_marginBottom="8dp"
                         android:text="Source Code"
                         android:textColor="@color/text_secondary"
-                        android:textSize="12sp"
+                        android:textSize="24sp"
                         android:textAllCaps="true"
                         android:letterSpacing="0.1" />
 
                     <TextView
                         android:id="@+id/tvGitHubUrl"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:minHeight="48dp"
+                        android:gravity="center_vertical"
                         android:text="@string/github_url"
-                        android:textColor="@color/primary"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
+                        android:textColor="@color/accent"
+                        android:textSize="28sp"
                         android:background="?attr/selectableItemBackground"
                         android:padding="4dp" />
 
@@ -153,14 +156,13 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Copyright -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="© 2026 Haziq Naqib. All rights reserved.\nBuilt for ICT602 — UiTM."
                 android:textColor="@color/text_secondary"
-                android:textSize="12sp" />
+                android:textSize="22sp" />
 
         </LinearLayout>
 
