@@ -7,7 +7,7 @@ import { RouterLink } from 'vue-router'
 import PhotoModal from '../components/PhotoModal.vue'
 import HazardMap from '../components/HazardMap.vue'
 
-const HAZARD_TYPES = ['Pothole', 'Flood', 'Accident', 'Fallen Tree', 'Traffic Light']
+const HAZARD_TYPES = ['Pothole', 'Flood', 'Accident', 'Fallen Tree', 'Damaged Road Sign', 'Broken Traffic Light']
 const STATUS_OPTIONS = ['New', 'Under Investigation', 'Resolved']
 
 const lightboxUrl = ref(null)
@@ -63,28 +63,6 @@ function statusClass(status) {
   return 'status-new'
 }
 
-const updatingId = ref(null)
-
-async function updateStatus(report, newStatus) {
-  if (newStatus === report.status) return
-  updatingId.value = report.id
-  try {
-    await set(dbRef(db, `hazard_reports/${report.id}/status`), newStatus)
-    const wasResolved = report.status === 'Resolved'
-    const isResolved = newStatus === 'Resolved'
-    if (wasResolved !== isResolved && report.uid) {
-      await set(
-        dbRef(db, `users/${report.uid}/resolvedReports`),
-        increment(isResolved ? 1 : -1),
-      )
-    }
-  } catch (e) {
-    alert(`Failed to update status: ${e.message}`)
-  } finally {
-    updatingId.value = null
-  }
-}
-
 async function deleteReport(report) {
   if (!confirm(`Delete this ${report.type} report? This cannot be undone.`)) return
   try {
@@ -111,6 +89,7 @@ async function deleteReport(report) {
 <template>
   <div>
     <h1>Manage Reports</h1>
+    <p class="report-count">Showing {{ filteredReports.length }} reports</p>
 
     <div class="filters">
       <input v-model="search" type="text" placeholder="Search type, description, reporter…" />
@@ -153,16 +132,14 @@ async function deleteReport(report) {
             <th>Type</th>
             <th>Description</th>
             <th>Reporter</th>
-            <th>GPS</th>
             <th>Date/Time</th>
-            <th>User-Agent</th>
             <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr v-if="filteredReports.length === 0">
-            <td colspan="9" class="empty">No reports match.</td>
+            <td colspan="7" class="empty">No reports match.</td>
           </tr>
           <tr v-for="r in filteredReports" :key="r.id">
             <td>
@@ -174,22 +151,15 @@ async function deleteReport(report) {
             <td>{{ r.type || '—' }}</td>
             <td class="description">{{ r.description || '—' }}</td>
             <td>{{ r.username }}</td>
-            <td>{{ r.latitude?.toFixed(6) }}, {{ r.longitude?.toFixed(6) }}</td>
             <td>{{ r.timestamp || '—' }}</td>
-            <td>{{ r.userAgent || '—' }}</td>
             <td>
-              <select
-                :value="r.status || 'New'"
-                :disabled="updatingId === r.id"
-                :class="['status-select', statusClass(r.status)]"
-                @change="updateStatus(r, $event.target.value)"
-              >
-                <option v-for="s in STATUS_OPTIONS" :key="s" :value="s">{{ s }}</option>
-              </select>
+              <span class="status-badge" :class="statusClass(r.status)">
+                {{ r.status || 'New' }}
+              </span>
             </td>
             <td class="actions">
-              <RouterLink :to="`/reports/${r.id}`">View</RouterLink>
-              <button class="btn-link-danger" @click="deleteReport(r)">Delete</button>
+              <RouterLink class="btn-view" :to="`/reports/${r.id}`">View</RouterLink>
+              <button class="btn-delete" @click="deleteReport(r)">Delete</button>
             </td>
           </tr>
         </tbody>
@@ -201,6 +171,20 @@ async function deleteReport(report) {
 </template>
 
 <style scoped>
+h1 {
+  color: #3D4127;
+  font-weight: 700;
+  font-size: 1.5rem;
+  border-left: 4px solid #636B2F;
+  padding-left: 12px;
+}
+
+.report-count {
+  color: #636B2F;
+  font-size: 0.85rem;
+  margin: 0.4rem 0 0 12px;
+}
+
 .thumb-btn {
   padding: 0;
   border: none;
@@ -218,9 +202,9 @@ async function deleteReport(report) {
 
 .filters input,
 .filters select {
-  padding: 0.45rem 0.6rem;
-  border: 1px solid var(--color-divider);
-  border-radius: var(--radius);
+  padding: 8px 12px;
+  border: 1.5px solid #BAC095;
+  border-radius: 6px;
   background: var(--color-on-primary);
   color: var(--color-text-primary);
 }
@@ -228,7 +212,7 @@ async function deleteReport(report) {
 .filters input:focus,
 .filters select:focus {
   outline: none;
-  border-color: var(--color-primary);
+  border-color: #636B2F;
 }
 
 .filters input[type='text'] {
@@ -281,18 +265,30 @@ async function deleteReport(report) {
 .reports-table th,
 .reports-table td {
   text-align: left;
-  padding: 0.7rem 0.9rem;
+  padding: 12px 8px;
   border-bottom: 1px solid var(--color-divider);
 }
 
 .reports-table th {
-  color: var(--color-text-secondary);
+  background: #636B2F;
+  color: #fff;
   font-weight: 500;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.reports-table tbody tr:nth-child(odd) {
+  background: var(--color-on-primary);
+}
+
+.reports-table tbody tr:nth-child(even) {
+  background: #f7f9f2;
 }
 
 .reports-table tbody tr:hover {
-  background: var(--color-surface);
+  background: #D4DE95;
+  transition: background 0.15s;
 }
 
 .reports-table tbody tr:last-child td {
@@ -300,15 +296,20 @@ async function deleteReport(report) {
 }
 
 .description {
-  max-width: 240px;
+  max-width: 150px;
   white-space: normal;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .thumb {
   width: 48px;
   height: 48px;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid var(--color-divider);
 }
 
@@ -317,18 +318,37 @@ async function deleteReport(report) {
   text-align: center;
 }
 
-.status-select {
-  padding: 0.25rem 0.5rem;
-  border-radius: var(--radius);
-  font-weight: 500;
-  font-size: 0.85rem;
-  border: 1px solid currentColor;
-  background: var(--color-on-primary);
-}
-
 .actions {
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
   align-items: center;
+}
+
+.btn-view,
+.btn-delete {
+  display: inline-block;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  text-decoration: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+.btn-view {
+  background: #636B2F;
+  color: #fff;
+  border: none;
+}
+
+.btn-view:hover {
+  text-decoration: none;
+  color: #fff;
+}
+
+.btn-delete {
+  background: #fff;
+  border: 1px solid #E87000;
+  color: #E87000;
 }
 </style>

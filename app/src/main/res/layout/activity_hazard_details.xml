@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/surface"
@@ -10,11 +11,10 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/primary"
+        style="@style/Widget.SmartRoad.Toolbar"
         app:navigationIcon="@drawable/ic_arrow_back"
         app:title="Hazard Details"
-        app:titleTextColor="@color/white"
-        app:titleTextAppearance="@style/TextAppearance.SmartRoad.ToolbarTitle" />
+        app:titleCentered="true" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,23 +26,32 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/ivPhoto"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:background="@color/divider"
-                android:contentDescription="Hazard photo"
-                android:scaleType="centerCrop"
-                android:visibility="gone" />
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
+
+                <ImageView
+                    android:id="@+id/ivPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:maxHeight="400dp"
+                    android:background="@color/divider"
+                    android:contentDescription="Hazard photo"
+                    tools:src="@mipmap/ic_launcher" />
+
+            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="0dp"
-                app:strokeColor="@color/divider"
-                app:strokeWidth="1dp">
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -53,9 +62,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="20dp"
-                        android:gravity="center_vertical">
+                        android:layout_marginBottom="24dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/tvType"
@@ -63,18 +72,22 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textColor="@color/text_primary"
-                            android:textSize="42sp"
-                            android:textStyle="bold" />
+                            android:textSize="28sp"
+                            android:textStyle="bold"
+                            tools:text="Fallen Tree" />
 
                         <TextView
                             android:id="@+id/tvStatus"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:background="@drawable/bg_status_pill"
                             android:paddingHorizontal="12dp"
                             android:paddingVertical="4dp"
                             android:textColor="@color/white"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            tools:text="New" />
 
                     </LinearLayout>
 
@@ -83,90 +96,86 @@
                         android:layout_height="wrap_content"
                         android:text="Description"
                         android:textColor="@color/text_secondary"
-                        android:textSize="24sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="16dp"
                         android:textColor="@color/text_primary"
-                        android:textSize="30sp" />
+                        android:textSize="16sp"
+                        tools:text="Tumbang woiii" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Reported by"
                         android:textColor="@color/text_secondary"
-                        android:textSize="24sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvReporter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="16dp"
                         android:textColor="@color/text_primary"
-                        android:textSize="30sp" />
+                        android:textSize="16sp"
+                        tools:text="Haziq Naqib" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Location"
                         android:textColor="@color/text_secondary"
-                        android:textSize="24sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvLocation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="16dp"
                         android:textColor="@color/text_primary"
-                        android:textSize="30sp" />
+                        android:textSize="16sp"
+                        tools:text="2.152033, 102.429800" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Reported at"
                         android:textColor="@color/text_secondary"
-                        android:textSize="24sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvTimestamp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="16dp"
                         android:textColor="@color/text_primary"
-                        android:textSize="30sp" />
+                        android:textSize="16sp"
+                        tools:text="2026-07-12 13:42:15" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Device"
                         android:textColor="@color/text_secondary"
-                        android:textSize="24sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvUserAgent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:layout_marginBottom="24dp"
+                        android:ellipsize="end"
+                        android:maxLines="2"
                         android:textColor="@color/text_primary"
-                        android:textSize="30sp" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnChangeStatus"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="@color/primary"
-                        android:text="Change Status"
-                        android:textColor="@color/white"
-                        android:textSize="28sp"
-                        android:visibility="gone" />
+                        android:textSize="16sp"
+                        tools:text="OPPO CPH1937 (Android)" />
 
                 </LinearLayout>
 
@@ -179,7 +188,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="32dp"
                 android:indeterminateTint="@color/primary"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
         </LinearLayout>
 

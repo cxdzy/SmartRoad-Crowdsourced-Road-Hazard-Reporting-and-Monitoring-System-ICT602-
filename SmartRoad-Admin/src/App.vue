@@ -26,7 +26,7 @@ async function handleLogout() {
     </div>
   </header>
 
-  <main class="content">
+  <main :class="route.name === 'login' ? '' : 'content'">
     <RouterView />
   </main>
 </template>

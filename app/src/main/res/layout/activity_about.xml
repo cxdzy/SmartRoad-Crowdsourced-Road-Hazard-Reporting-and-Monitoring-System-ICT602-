@@ -10,27 +10,26 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/primary"
+        style="@style/Widget.SmartRoad.Toolbar"
         app:navigationIcon="@drawable/ic_arrow_back"
-        app:title="About"
-        app:titleTextColor="@color/white"
-        app:titleTextAppearance="@style/TextAppearance.SmartRoad.ToolbarTitle" />
+        app:title="About" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="16dp">
 
             <ImageView
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:layout_marginTop="16dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="8dp"
                 android:contentDescription="SmartRoad logo"
                 android:src="@mipmap/ic_launcher" />
 
@@ -40,7 +39,7 @@
                 android:layout_marginTop="12dp"
                 android:text="@string/app_name"
                 android:textColor="@color/primary"
-                android:textSize="54sp"
+                android:textSize="32sp"
                 android:textStyle="bold"
                 android:letterSpacing="0.1" />
 
@@ -50,26 +49,26 @@
                 android:layout_marginTop="4dp"
                 android:text="Version 1.0"
                 android:textColor="@color/text_secondary"
-                android:textSize="28sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="16dp"
                 android:text="@string/app_tagline"
                 android:textColor="@color/accent"
-                android:textSize="28sp"
+                android:textSize="16sp"
                 android:textStyle="italic" />
 
+            <!-- NEW: Development Team Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="0dp"
-                app:strokeColor="@color/divider"
-                app:strokeWidth="1dp">
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -80,49 +79,104 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:text="Developer"
+                        android:layout_marginBottom="16dp"
+                        android:text="Development Team"
                         android:textColor="@color/text_secondary"
-                        android:textSize="24sp"
+                        android:textSize="14sp"
                         android:textAllCaps="true"
                         android:letterSpacing="0.1" />
 
+                    <!-- Team Member 1 -->
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Haziq Naqib"
+                        android:text="Mohamad Haziq Naqib bin Zaid"
                         android:textColor="@color/text_primary"
-                        android:textSize="34sp"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="12dp"
+                        android:text="2025181477"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp" />
+
+                    <!-- Team Member 2 -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Muhammad Akmal bin Mohamad 'Asri"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:text="2025117863"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp" />
+
+                    <!-- Team Member 3 -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Muhammad Rafiq Shah bin Ramli"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:text="2025120989"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp" />
+
+                    <!-- Team Member 4 -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Zarith Asyraf bin Zureimi"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:text="2025161739"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp" />
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="#1A000000" />
+
+                    <!-- Course Info -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="ICT602 Mobile Technology"
                         android:textColor="@color/text_secondary"
-                        android:textSize="28sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text="haziqnaqib11@gmail.com"
-                        android:textColor="@color/text_secondary"
-                        android:textSize="28sp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Source Code Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="0dp"
-                app:strokeColor="@color/divider"
-                app:strokeWidth="1dp">
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -136,7 +190,7 @@
                         android:layout_marginBottom="8dp"
                         android:text="Source Code"
                         android:textColor="@color/text_secondary"
-                        android:textSize="24sp"
+                        android:textSize="14sp"
                         android:textAllCaps="true"
                         android:letterSpacing="0.1" />
 
@@ -146,9 +200,10 @@
                         android:layout_height="wrap_content"
                         android:minHeight="48dp"
                         android:gravity="center_vertical"
-                        android:text="@string/github_url"
+                        android:text="https://github.com/cxdzy/SmartRoad-Crowdsourced-Road-Hazard-Reporting-and-Monitoring-System-ICT602-.git"
                         android:textColor="@color/accent"
-                        android:textSize="28sp"
+                        android:textSize="14sp"
+                        android:autoLink="web"
                         android:background="?attr/selectableItemBackground"
                         android:padding="4dp" />
 
@@ -156,13 +211,21 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <!-- Updated Copyright -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:gravity="center"
-                android:text="© 2026 Haziq Naqib. All rights reserved.\nBuilt for ICT602 — UiTM."
+                android:text="© 2026 SmartRoad Team. All rights reserved.\nBuilt for ICT602 — UiTM."
                 android:textColor="@color/text_secondary"
-                android:textSize="22sp" />
+                android:textSize="12sp" />
 
         </LinearLayout>
 

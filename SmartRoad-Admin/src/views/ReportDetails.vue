@@ -94,7 +94,7 @@ async function saveStatus() {
 
       <dl class="fields">
         <dt>Reporter</dt>
-        <dd>{{ reporterName }}</dd>
+        <dd class="reporter">{{ reporterName }}</dd>
 
         <dt>Description</dt>
         <dd>{{ report.description || '—' }}</dd>
@@ -142,11 +142,34 @@ async function saveStatus() {
 .back-link {
   display: inline-block;
   margin-bottom: 1rem;
-  color: var(--color-primary);
+  color: #636B2F;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: 0.15s;
+}
+
+.back-link:hover {
+  text-decoration: underline;
 }
 
 .report-card {
-  max-width: 640px;
+  max-width: 700px;
+  margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(61, 65, 39, 0.12);
+  border: 1.5px solid #BAC095;
+  background: #fff;
+  padding: 2rem;
+}
+
+.report-card h1 {
+  color: #3D4127;
+  font-weight: 700;
+  font-size: 1.4rem;
+  border-left: 4px solid #636B2F;
+  padding-left: 12px;
+  margin-bottom: 1.25rem;
 }
 
 .photo-btn {
@@ -160,11 +183,11 @@ async function saveStatus() {
 
 .photo {
   width: 100%;
-  max-height: 360px;
+  max-height: 280px;
   object-fit: cover;
-  border-radius: var(--radius);
-  border: 1px solid var(--color-divider);
-  margin: 1rem 0;
+  border-radius: 10px;
+  border: 1.5px solid #BAC095;
+  margin-bottom: 1.5rem;
 }
 
 .photo-placeholder {
@@ -180,17 +203,27 @@ async function saveStatus() {
 .fields {
   display: grid;
   grid-template-columns: 160px 1fr;
-  row-gap: 0.75rem;
   margin: 1.5rem 0;
 }
 
 .fields dt {
-  font-weight: 500;
-  color: var(--color-text-secondary);
+  color: #636B2F;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0e8;
 }
 
 .fields dd {
   margin: 0;
+  color: #3D4127;
+  font-size: 0.9rem;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0e8;
+}
+
+.fields dd.reporter {
+  color: #E87000;
 }
 
 .status-form {
@@ -198,15 +231,41 @@ async function saveStatus() {
   align-items: center;
   gap: 0.75rem;
   padding-top: 1.25rem;
-  border-top: 1px solid var(--color-divider);
+  border-top: 1.5px solid #BAC095;
+  margin-top: 1.25rem;
+}
+
+.status-form label {
+  color: #636B2F;
+  font-weight: 600;
+  font-size: 0.875rem;
 }
 
 .status-form select {
-  padding: 0.45rem 0.6rem;
-  border: 1px solid var(--color-divider);
-  border-radius: var(--radius);
+  padding: 8px 12px;
+  border: 1.5px solid #BAC095;
+  border-radius: 6px;
   background: var(--color-on-primary);
-  color: var(--color-text-primary);
+  color: #3D4127;
+}
+
+.status-form select:focus {
+  outline: none;
+  border-color: #636B2F;
+}
+
+.status-form .btn {
+  background: #636B2F;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 8px 20px;
+  border: none;
+  transition: background 0.2s;
+}
+
+.status-form .btn:hover:not(:disabled) {
+  background: #4a5022;
 }
 
 .error {

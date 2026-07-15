@@ -5,18 +5,25 @@
         <item name="colorAccent">@color/accent</item>
         <item name="android:statusBarColor">@color/primary_dark</item>
         <item name="android:windowBackground">@color/surface</item>
-        <item name="android:fontFamily">@font/dongle</item>
-        <item name="fontFamily">@font/dongle</item>
+        <item name="android:fontFamily">@font/inclusive_sans</item>
+        <item name="fontFamily">@font/inclusive_sans</item>
     </style>
 
     <style name="Theme.SmartRoad" parent="Base.Theme.SmartRoad" />
 
     <style name="TextAppearance.SmartRoad.ToolbarTitle" parent="TextAppearance.MaterialComponents.Headline6">
-        <item name="android:textSize">40sp</item>
-        <item name="android:fontFamily">@font/dongle</item>
+        <!-- Change 40sp to 22sp here! -->
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">@font/inclusive_sans</item>
     </style>
 
     <style name="Theme.SmartRoad.Login" parent="Base.Theme.SmartRoad">
         <item name="android:windowBackground">@color/primary</item>
+    </style>
+
+    <style name="Widget.SmartRoad.Toolbar" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:background">@color/primary</item>
+        <item name="titleTextColor">@color/white</item>
+        <item name="titleTextAppearance">@style/TextAppearance.SmartRoad.ToolbarTitle</item>
     </style>
 </resources>

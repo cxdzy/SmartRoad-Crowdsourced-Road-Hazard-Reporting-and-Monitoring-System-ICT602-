@@ -8,13 +8,14 @@ const props = defineProps({
   height: { type: String, default: '400px' },
 })
 
-// Same red/blue/orange/green/yellow mapping as the Android app's HazardMapActivity.
+// Same 6-type color mapping as the Android app's HazardMapActivity.
 const LEGEND = [
-  { type: 'Pothole', color: '#e53935' },
-  { type: 'Flood', color: '#1e88e5' },
-  { type: 'Accident', color: '#fb8c00' },
-  { type: 'Fallen Tree', color: '#43a047' },
-  { type: 'Traffic Light', color: '#fdd835' },
+  { type: 'Pothole', color: '#FF0000' },
+  { type: 'Flood', color: '#0000FF' },
+  { type: 'Accident', color: '#FF8C00' },
+  { type: 'Fallen Tree', color: '#008000' },
+  { type: 'Damaged Road Sign', color: '#FFD700' },
+  { type: 'Broken Traffic Light', color: '#8B00FF' },
 ]
 const COLOR_BY_TYPE = Object.fromEntries(LEGEND.map((item) => [item.type, item.color]))
 const DEFAULT_COLOR = '#9e9e9e'
@@ -188,7 +189,11 @@ watch(
 .legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 0.25rem;
+  gap: 1.5rem;
+  background: #fff;
+  border: 1px solid #BAC095;
+  border-radius: 8px;
+  padding: 8px 16px;
 }
 
 .legend-item {

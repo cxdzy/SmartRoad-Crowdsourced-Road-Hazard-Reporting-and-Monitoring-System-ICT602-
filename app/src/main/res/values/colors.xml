@@ -16,6 +16,8 @@
     <color name="divider">#DDD9D0</color>
     <color name="surface_translucent">#D9F5F3EE</color>
     <color name="danger">#C62828</color>
+    <color name="sage">#BAC095</color>
+    <color name="orange">#E87000</color>
 
     <!-- Hazard marker colors (functional — do not change) -->
     <color name="hazard_pothole">#F44336</color>

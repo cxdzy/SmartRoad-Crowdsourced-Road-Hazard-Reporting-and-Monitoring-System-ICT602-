@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Base shape for the status badge in activity_hazard_details.xml.
+     Color is applied at runtime in HazardDetailsActivity.applyStatusBadge() via setTint(),
+     so the fill below is just a placeholder. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/status_new" />
+    <corners android:radius="20dp" />
+</shape>

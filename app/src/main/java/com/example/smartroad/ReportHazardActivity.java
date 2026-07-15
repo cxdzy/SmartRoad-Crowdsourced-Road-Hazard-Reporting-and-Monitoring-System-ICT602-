@@ -3,13 +3,15 @@ package com.example.smartroad;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,6 +32,9 @@ import com.google.firebase.database.ServerValue;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -39,63 +45,101 @@ public class ReportHazardActivity extends AppCompatActivity {
 
     private static final int LOCATION_PERMISSION_REQUEST = 1002;
 
-    private RadioGroup rgHazardType;
+    private AutoCompleteTextView actvHazardType;
     private TextInputEditText etDescription;
     private ImageView ivPhotoPreview;
-    private TextView tvLatLng, tvDateTime;
+    private TextView tvNoPhoto, tvLatLng, tvDateTime;
     private ProgressBar progressBar;
+    private MaterialButton btnTakePhoto, btnSelectPhoto, btnSubmit;
 
     private Uri selectedPhotoUri = null;
     private double currentLat = 0, currentLng = 0;
     private boolean locationAcquired = false;
 
     private com.google.android.gms.location.FusedLocationProviderClient fusedLocationClient;
+
     private ActivityResultLauncher<String> photoPickerLauncher;
+    private ActivityResultLauncher<Void> cameraLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_hazard);
 
+        // --- CORRECTED BOTTOM NAVIGATION LOGIC ---
         BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
         bottomNav.setSelectedItemId(R.id.nav_report);
+
         bottomNav.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
+
+            if (id == R.id.nav_report) {
+                return true;
+            }
+
             if (id == R.id.nav_map) {
                 startActivity(new Intent(this, HazardMapActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                overridePendingTransition(0, 0);
+                return false;
             } else if (id == R.id.nav_profile) {
                 startActivity(new Intent(this, ProfileActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                overridePendingTransition(0, 0);
+                return false;
             }
-            return true;
+            return false;
         });
+        // -----------------------------------------
 
-        rgHazardType = findViewById(R.id.rgHazardType);
+        // Initialize Views
+        actvHazardType = findViewById(R.id.actvHazardType);
         etDescription = findViewById(R.id.etDescription);
         ivPhotoPreview = findViewById(R.id.ivPhotoPreview);
+        tvNoPhoto = findViewById(R.id.tvNoPhoto);
         tvLatLng = findViewById(R.id.tvLatLng);
         tvDateTime = findViewById(R.id.tvDateTime);
         progressBar = findViewById(R.id.progressBar);
+        btnTakePhoto = findViewById(R.id.btnTakePhoto);
+        btnSelectPhoto = findViewById(R.id.btnSelectPhoto);
+        btnSubmit = findViewById(R.id.btnSubmit);
+
+        // Setup Dropdown Menu
+        String[] hazards = new String[]{"Pothole", "Flood", "Accident", "Fallen Tree",
+                "Damaged Road Sign", "Broken Traffic Light"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, hazards);
+        actvHazardType.setAdapter(adapter);
 
         // Auto-fill date and time
         String now = new SimpleDateFormat("dd MMM yyyy  HH:mm:ss", Locale.getDefault()).format(new Date());
         tvDateTime.setText(now);
 
-        // Photo picker (no storage permission needed on Android 10+)
+        // Photo Picker (Gallery) Setup
         photoPickerLauncher = registerForActivityResult(
                 new ActivityResultContracts.GetContent(), uri -> {
                     if (uri != null) {
                         selectedPhotoUri = uri;
                         ivPhotoPreview.setImageURI(uri);
                         ivPhotoPreview.setVisibility(View.VISIBLE);
+                        tvNoPhoto.setVisibility(View.GONE);
                     }
                 });
 
-        findViewById(R.id.btnSelectPhoto).setOnClickListener(v ->
-                photoPickerLauncher.launch("image/*"));
+        // Camera Setup
+        cameraLauncher = registerForActivityResult(
+                new ActivityResultContracts.TakePicturePreview(), bitmap -> {
+                    if (bitmap != null) {
+                        ivPhotoPreview.setImageBitmap(bitmap);
+                        ivPhotoPreview.setVisibility(View.VISIBLE);
+                        tvNoPhoto.setVisibility(View.GONE);
+                        selectedPhotoUri = getImageUriFromBitmap(bitmap);
+                    }
+                });
 
-        findViewById(R.id.btnSubmit).setOnClickListener(v -> submitReport());
+        // Button Click Listeners
+        btnSelectPhoto.setOnClickListener(v -> photoPickerLauncher.launch("image/*"));
+        btnTakePhoto.setOnClickListener(v -> cameraLauncher.launch(null));
+        btnSubmit.setOnClickListener(v -> submitReport());
 
         fusedLocationClient = com.google.android.gms.location.LocationServices
                 .getFusedLocationProviderClient(this);
@@ -139,25 +183,22 @@ public class ReportHazardActivity extends AppCompatActivity {
     // ── Submit ────────────────────────────────────────────────────────────────
 
     private void submitReport() {
-        // Validate hazard type
-        int selectedId = rgHazardType.getCheckedRadioButtonId();
-        if (selectedId == -1) {
-            Toast.makeText(this, "Please select a hazard type.", Toast.LENGTH_SHORT).show();
+        String hazardType = actvHazardType.getText().toString().trim();
+        if (hazardType.isEmpty()) {
+            Toast.makeText(this, "Please select a Hazard Type.", Toast.LENGTH_SHORT).show();
             return;
         }
-        String hazardType = getHazardTypeLabel(selectedId);
 
-        // Validate description
         String description = etDescription.getText() != null
                 ? etDescription.getText().toString().trim() : "";
         if (description.isEmpty()) {
-            etDescription.setError("Description is required");
+            etDescription.setError("Add a short description");
             etDescription.requestFocus();
             return;
         }
 
         if (!locationAcquired) {
-            Toast.makeText(this, "Waiting for GPS location. Try again in a moment.",
+            Toast.makeText(this, "Still finding your location. Try again in a moment.",
                     Toast.LENGTH_SHORT).show();
             return;
         }
@@ -187,7 +228,7 @@ public class ReportHazardActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> {
                     progressBar.setVisibility(View.GONE);
                     setFormEnabled(true);
-                    Toast.makeText(this, "Photo upload failed: " + e.getMessage(),
+                    Toast.makeText(this, "Couldn't upload the photo: " + e.getMessage(),
                             Toast.LENGTH_LONG).show();
                 });
     }
@@ -218,38 +259,44 @@ public class ReportHazardActivity extends AppCompatActivity {
 
         reportsRef.child(reportId).setValue(report)
                 .addOnSuccessListener(unused -> {
-                    // Increment user's total report count
                     FirebaseDatabase.getInstance().getReference("users")
                             .child(user.getUid()).child("totalReports")
                             .setValue(ServerValue.increment(1));
 
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(this, "Report submitted successfully!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Report submitted", Toast.LENGTH_SHORT).show();
                     finish();
                 })
                 .addOnFailureListener(e -> {
                     progressBar.setVisibility(View.GONE);
                     setFormEnabled(true);
-                    Toast.makeText(this, "Failed to save report: " + e.getMessage(),
+                    Toast.makeText(this, "Couldn't save the report: " + e.getMessage(),
                             Toast.LENGTH_LONG).show();
                 });
     }
 
     // ── Helpers ───────────────────────────────────────────────────────────────
 
-    private String getHazardTypeLabel(int radioId) {
-        if (radioId == R.id.rbPothole)      return "Pothole";
-        if (radioId == R.id.rbFlood)        return "Flood";
-        if (radioId == R.id.rbAccident)     return "Accident";
-        if (radioId == R.id.rbFallenTree)   return "Fallen Tree";
-        if (radioId == R.id.rbTrafficLight) return "Traffic Light";
-        return "Unknown";
+    private Uri getImageUriFromBitmap(Bitmap bitmap) {
+        try {
+            File cachePath = new File(getCacheDir(), "images");
+            cachePath.mkdirs();
+            File file = new File(cachePath, "captured_image.jpg");
+            FileOutputStream stream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            stream.close();
+            return Uri.fromFile(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     private void setFormEnabled(boolean enabled) {
-        rgHazardType.setEnabled(enabled);
+        actvHazardType.setEnabled(enabled);
         etDescription.setEnabled(enabled);
-        findViewById(R.id.btnSelectPhoto).setEnabled(enabled);
-        findViewById(R.id.btnSubmit).setEnabled(enabled);
+        btnTakePhoto.setEnabled(enabled);
+        btnSelectPhoto.setEnabled(enabled);
+        btnSubmit.setEnabled(enabled);
     }
 }

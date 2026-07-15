@@ -26,19 +26,31 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        // --- CORRECTED BOTTOM NAVIGATION LOGIC ---
         BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
         bottomNav.setSelectedItemId(R.id.nav_profile);
+
         bottomNav.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
+
+            if (id == R.id.nav_profile) {
+                return true;
+            }
+
             if (id == R.id.nav_report) {
                 startActivity(new Intent(this, ReportHazardActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                overridePendingTransition(0, 0);
+                return false;
             } else if (id == R.id.nav_map) {
                 startActivity(new Intent(this, HazardMapActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+                overridePendingTransition(0, 0);
+                return false;
             }
-            return true;
+            return false;
         });
+        // -----------------------------------------
 
         tvAvatar       = findViewById(R.id.tvAvatar);
         tvName         = findViewById(R.id.tvName);
@@ -96,9 +108,9 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void confirmLogout() {
         new AlertDialog.Builder(this)
-                .setTitle("Log Out")
-                .setMessage("Are you sure you want to log out?")
-                .setPositiveButton("Log Out", (dialog, which) -> {
+                .setTitle("Log out")
+                .setMessage("You'll need to sign in again to submit or track reports.")
+                .setPositiveButton("Log out", (dialog, which) -> {
                     FirebaseAuth.getInstance().signOut();
                     startActivity(new Intent(this, LoginActivity.class)
                             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
