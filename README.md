@@ -259,6 +259,13 @@ admins/
 
 ---
 
+# Contributors
+
+- MUHAMMAD AKMAL BIN MOHAMAD 'ASRI 
+- ZARITH ASYRAF BIN ZUREIMI
+- MOHAMAD HAZIQ NAQIB BIN ZAID
+- RAFIQ SHAH BIN RAMLI
+
 ## License
 
 This project currently does not specify a license.
